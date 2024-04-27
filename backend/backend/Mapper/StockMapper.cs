@@ -5,7 +5,7 @@ namespace backend.Mapper
 {
     public static class StockMapper
     {
-        public static StockDto ToStockDto ( this Stock stockModel)
+        public static StockDto ToStockDto(this Stock stockModel)
         {
             return new StockDto
             {
@@ -16,19 +16,33 @@ namespace backend.Mapper
                 LastDiv = stockModel.LastDiv,
                 Industry = stockModel.Industry,
                 MarketCap = stockModel.MarketCap,
+                Comments = stockModel.Comments.Select(c => c.ToCommentDto()).ToList()
             };
-        } 
+        }
 
-        public static Stock ToStockFromCreateDto(this CreateStockRequestDto stockRequestDto)
+        public static Stock ToStockFromCreateDTO(this CreateStockRequestDto stockDto)
         {
             return new Stock
             {
-                Symbol = stockRequestDto.Symbol,
-                CompanyName = stockRequestDto.CompanyName,
-                Purchase = stockRequestDto.Purchase,
-                LastDiv = stockRequestDto.LastDiv,
-                Industry = stockRequestDto.Industry,
-                MarketCap = stockRequestDto.MarketCap,
+                Symbol = stockDto.Symbol,
+                CompanyName = stockDto.CompanyName,
+                Purchase = stockDto.Purchase,
+                LastDiv = stockDto.LastDiv,
+                Industry = stockDto.Industry,
+                MarketCap = stockDto.MarketCap
+            };
+        }
+
+        public static Stock ToStockFromFMP(this FMPStock fmpStock)
+        {
+            return new Stock
+            {
+                Symbol = fmpStock.symbol,
+                CompanyName = fmpStock.companyName,
+                Purchase = (decimal)fmpStock.price,
+                LastDiv = (decimal)fmpStock.lastDiv,
+                Industry = fmpStock.industry,
+                MarketCap = fmpStock.mktCap
             };
         }
     }
