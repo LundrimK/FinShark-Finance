@@ -30,7 +30,6 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetUserPortfolio()
         {
             var username = User.GetUsername();
@@ -40,7 +39,6 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> AddPortfolio(string symbol)
         {
             var username = User.GetUsername();
@@ -87,7 +85,6 @@ namespace backend.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
         public async Task<IActionResult> DeletePortfolio(string symbol)
         {
             var username = User.GetUsername();
