@@ -1,7 +1,7 @@
 import React, { SyntheticEvent } from 'react'
-import { Link } from 'react-router-dom'
 import DeletePortfolio from '../DeletePortfolio/DeletePortfolio'
 import { PortfolioGet } from '../../../Models/Portfolio'
+import { Link } from 'react-router-dom'
 
 interface Props {
   portfolioValue: PortfolioGet

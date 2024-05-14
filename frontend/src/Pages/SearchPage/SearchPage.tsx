@@ -37,23 +37,52 @@ const SearchPage = (props: Props) => {
         if (res?.data) {
           setPortfolioValues(res?.data)
         }
+        console.log(res)
       })
       .catch((e) => {
         setPortfolioValues(null)
       })
   }
 
+  // const onPortfolioCreate = (e: any) => {
+  //   e.preventDefault()
+  //   portfolioAddAPI(e.target[0].value)
+  //     .then((res) => {
+  //       if (res?.status === 204) {
+  //         toast.success('Stock added to portfolio!')
+  //         getPortfolio()
+  //       }
+  //       console.log(res)
+  //     })
+  //     .catch((e) => {
+  //       toast.warning('Could not add stock to portfolio!')
+  //     })
+  // }
+
   const onPortfolioCreate = (e: any) => {
     e.preventDefault()
-    portfolioAddAPI(e.target[0].value)
+
+    const stockValue = e.target[0]?.value
+
+    // Check if the stock value is correctly retrieved
+    if (!stockValue) {
+      toast.warning('Please enter a valid stock value!')
+      return
+    }
+
+    portfolioAddAPI(stockValue)
       .then((res) => {
-        if (res?.status === 204) {
+        if (res?.status === 201) {
           toast.success('Stock added to portfolio!')
           getPortfolio()
+        } else {
+          toast.warning('Unexpected response from server!')
+          console.log('Unexpected response:', res)
         }
       })
-      .catch((e) => {
+      .catch((error) => {
         toast.warning('Could not add stock to portfolio!')
+        console.error('API Error:', error)
       })
   }
 

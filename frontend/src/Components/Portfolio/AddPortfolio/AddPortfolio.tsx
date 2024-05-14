@@ -1,6 +1,6 @@
-import React, { SyntheticEvent } from 'react'
+import { SyntheticEvent } from 'react'
 
-type Props = {
+interface Props {
   onPortfolioCreate: (e: SyntheticEvent) => void
   symbol: string
 }
