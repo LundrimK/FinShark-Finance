@@ -8,6 +8,7 @@ using backend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace backend.Controllers
 {
@@ -43,7 +44,8 @@ namespace backend.Controllers
         {
             var username = User.GetUsername();
             var appUser = await _userManager.FindByNameAsync(username);
-            var stock = await _stockRepo.GetBySymbolAsync(symbol);
+            var symbolCase = symbol.ToLower();
+            var stock = await _stockRepo.GetBySymbolAsync(symbolCase);
 
             if (stock == null)
             {
@@ -72,7 +74,7 @@ namespace backend.Controllers
 
             await _portfolioRepo.CreateAsync(portfolioModel);
 
-            var uri = $"{Request.Scheme}://{Request.Host}/api/portfolio/{portfolioModel.AppUserId}"; // Assuming the ID of the portfolio is used in the URI
+            var uri = $"{Request.Scheme}://localhost:3000/api/portfolio/{portfolioModel.AppUserId}"; // Assuming the ID of the portfolio is used in the URI
 
             if (portfolioModel == null)
             {
